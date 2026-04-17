@@ -8,6 +8,7 @@
       name="description"
       content="Venda mais com estratégia, tráfego, funis e IA. Soluções para crescer com estrutura, direção e menos achismo."
     />
+    <meta name="ga-measurement-id" content="G-99V8RYFSHT" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -29,7 +30,14 @@
           Eu acelero seu negócio com as ferramentas certas para vender mais.
         </p>
 
-        <a class="primary-cta" href="https://wa.me/5588992972504">Quero vender mais</a>
+        <a
+          class="primary-cta"
+          href="https://wa.me/5588992972504"
+          data-analytics-event="click_whatsapp_cta"
+          data-analytics-label="hero_quero_vender_mais"
+        >
+          Quero vender mais
+        </a>
       </section>
 
       <section class="link-groups">
@@ -40,21 +48,36 @@
           </div>
 
           <div class="link-list">
-            <a class="link-card" href="https://wa.me/5588992972504">
+            <a
+              class="link-card"
+              href="https://wa.me/5588992972504"
+              data-analytics-event="click_whatsapp_cta"
+              data-analytics-label="diagnostico_negocio"
+            >
               <span class="link-title">Fazer diagnóstico do meu negócio</span>
               <span class="link-copy">
                 Entender o cenário e mostrar o que precisa ser feito.
               </span>
             </a>
 
-            <a class="link-card" href="https://wa.me/5588992972504">
+            <a
+              class="link-card"
+              href="https://wa.me/5588992972504"
+              data-analytics-event="click_whatsapp_cta"
+              data-analytics-label="acelerar_crescimento"
+            >
               <span class="link-title">Acelerar meu crescimento</span>
               <span class="link-copy">
                 Aplicar estratégia, tráfego e estrutura para vender mais.
               </span>
             </a>
 
-            <a class="link-card" href="https://wa.me/5588992972504">
+            <a
+              class="link-card"
+              href="https://wa.me/5588992972504"
+              data-analytics-event="click_whatsapp_cta"
+              data-analytics-label="criar_sistema_vendas"
+            >
               <span class="link-title">Criar um sistema de vendas</span>
               <span class="link-copy">
                 Organizar o processo comercial para crescer com base.
@@ -67,32 +90,59 @@
           <div class="group-head">
             <p class="eyebrow">Educacional</p>
             <h2>Para quem quer aprender a construir com estratégia.</h2>
-            <a class="section-cta" href="https://wa.me/5588992972504">Quero entrar na mentoria</a>
+            <a
+              class="section-cta"
+              href="https://wa.me/5588992972504"
+              data-analytics-event="click_whatsapp_cta"
+              data-analytics-label="mentoria_section_cta"
+            >
+              Quero entrar na mentoria
+            </a>
           </div>
 
           <div class="link-list">
-            <a class="link-card" href="https://wa.me/5588992972504">
+            <a
+              class="link-card"
+              href="https://wa.me/5588992972504"
+              data-analytics-event="click_whatsapp_cta"
+              data-analytics-label="aprender_marketing"
+            >
               <span class="link-title">Aprender marketing com estratégia</span>
               <span class="link-copy">
                 Aprender o que realmente gera resultado no marketing.
               </span>
             </a>
 
-            <a class="link-card" href="https://wa.me/5588992972504">
+            <a
+              class="link-card"
+              href="https://wa.me/5588992972504"
+              data-analytics-event="click_whatsapp_cta"
+              data-analytics-label="usar_ia_vender_mais"
+            >
               <span class="link-title">Usar IA para vender mais</span>
               <span class="link-copy">
                 Usar IA de forma prática para marketing e vendas.
               </span>
             </a>
 
-            <a class="link-card" href="https://wa.me/5588992972504">
+            <a
+              class="link-card"
+              href="https://wa.me/5588992972504"
+              data-analytics-event="click_whatsapp_cta"
+              data-analytics-label="estruturar_negocio_zero"
+            >
               <span class="link-title">Estruturar meu negócio do zero</span>
               <span class="link-copy">
                 Construir a base certa desde o começo.
               </span>
             </a>
 
-            <a class="link-card" href="https://wa.me/5588992972504">
+            <a
+              class="link-card"
+              href="https://wa.me/5588992972504"
+              data-analytics-event="click_whatsapp_cta"
+              data-analytics-label="entrar_mentoria"
+            >
               <span class="link-title">Entrar para a mentoria</span>
               <span class="link-copy">
                 Ter direção, acompanhamento e clareza para crescer.
@@ -102,5 +152,44 @@
         </article>
       </section>
     </main>
+
+    <script>
+      const measurementId = document
+        .querySelector('meta[name="ga-measurement-id"]')
+        ?.getAttribute("content")
+        ?.trim();
+
+      const hasValidMeasurementId = measurementId && /^G-[A-Z0-9]+$/i.test(measurementId);
+
+      if (hasValidMeasurementId) {
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+          window.dataLayer.push(arguments);
+        }
+
+        window.gtag = gtag;
+        const analyticsScript = document.createElement("script");
+        analyticsScript.async = true;
+        analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+        analyticsScript.addEventListener("load", () => {
+          gtag("js", new Date());
+          gtag("config", measurementId);
+        });
+        document.head.appendChild(analyticsScript);
+
+        document.querySelectorAll("[data-analytics-event]").forEach((link) => {
+          link.addEventListener("click", () => {
+            gtag("event", link.dataset.analyticsEvent, {
+              link_text: link.textContent.trim().replace(/\s+/g, " "),
+              link_url: link.href,
+              cta_label: link.dataset.analyticsLabel || "",
+            });
+          });
+        });
+      } else {
+        console.warn("GA4 nao inicializado. Verifique o Measurement ID configurado.");
+      }
+    </script>
   </body>
 </html>
